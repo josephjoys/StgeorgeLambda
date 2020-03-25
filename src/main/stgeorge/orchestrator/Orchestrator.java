@@ -33,7 +33,12 @@ public class Orchestrator {
     private void setContactUs() {
         trigger = Trigger.EMAIL;
         toAddress = System.getenv("ContactUsToAddress");
-        subject = "New Contact Request";
+        
+        StringBuilder sub = new StringBuilder("New Contact Request");
+        if(!StringUtils.isEmpty(inputData.get("FirstName"))) sub.append(inputData.get("FirstName"));
+        if(!StringUtils.isEmpty(inputData.get("LastName")))  sub.append(inputData.get("LastName"));      
+        subject = sub.toString();
+        
         StringBuilder sb = new StringBuilder("Hi \n \n  You have a new contact request from stgeorge website. Please see the details below.\n");
         if(!StringUtils.isEmpty(inputData.get("FirstName"))) sb.append("\nFirst Name : "+inputData.get("FirstName"));
         if(!StringUtils.isEmpty(inputData.get("LastName")))  sb.append("\nLast Name : "+inputData.get("LastName"));
