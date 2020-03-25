@@ -34,9 +34,9 @@ public class Orchestrator {
         trigger = Trigger.EMAIL;
         toAddress = System.getenv("ContactUsToAddress");
         
-        StringBuilder sub = new StringBuilder("New Contact Request");
-        if(!StringUtils.isEmpty(inputData.get("FirstName"))) sub.append(inputData.get("FirstName"));
-        if(!StringUtils.isEmpty(inputData.get("LastName")))  sub.append(inputData.get("LastName"));      
+        StringBuilder sub = new StringBuilder("New Contact Request :");
+        if(!StringUtils.isEmpty(inputData.get("FirstName"))) sub.append(" "+inputData.get("FirstName"));
+        if(!StringUtils.isEmpty(inputData.get("LastName")))  sub.append(" "+inputData.get("LastName"));      
         subject = sub.toString();
         
         StringBuilder sb = new StringBuilder("Hi \n \n  You have a new contact request from stgeorge website. Please see the details below.\n");

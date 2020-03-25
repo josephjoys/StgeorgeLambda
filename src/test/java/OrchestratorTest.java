@@ -13,6 +13,13 @@ public class OrchestratorTest extends TestCase {
         orchestrator.orchestrate();
         Assert.assertEquals(Trigger.EMAIL,orchestrator.getTrigger());
     }
+    
+    @Test
+    public void testContactUsEmailSubject(){
+        Orchestrator orchestrator = new Orchestrator(TestUtils.getTesEvent());
+        orchestrator.orchestrate();
+        Assert.assertEquals(Trigger.EMAIL,orchestrator.getTrigger());
+    }
 
     /*Write remaining tests*/
 }
