@@ -8,7 +8,7 @@ import stgeorge.mail.Emailer;
 import stgeorge.orchestrator.Orchestrator;
 import stgeorge.validator.LambdaValidator;
 
-import java.util.Map;
+import java.util.*;
 
 public class Handler implements RequestHandler<Map<String, String>, String> {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -32,4 +32,5 @@ public class Handler implements RequestHandler<Map<String, String>, String> {
         Emailer emailer = new Emailer();
         emailer.send(orchestrator.getToAddress(), orchestrator.getSubject(), orchestrator.getMessage());
     }
+
 }

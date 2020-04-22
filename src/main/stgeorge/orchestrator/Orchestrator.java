@@ -15,13 +15,14 @@ public class Orchestrator {
     private String message = null;
 
     public Orchestrator(Map<String, String> data) {
+
         inputData = data;
     }
 
     public void orchestrate() {
         if (inputData.get("RequestFor") != null) {
             switch (inputData.get("RequestFor")) {
-                case "ContactUs":
+                case "contactus":
                     setContactUs();
                     break;
             }
