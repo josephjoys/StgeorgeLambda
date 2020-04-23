@@ -11,6 +11,7 @@ public class TestUtils {
         event.put("EmailAddress","john.smith@happy.com");
         event.put("PhoneNumber","4254581210");
         event.put("RequestFor","ContactUs");
+        event.put("EMAIL","email@email.com");
         return event;
     }
 

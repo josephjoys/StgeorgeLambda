@@ -1,5 +1,7 @@
 package stgeorge.validator;
 
+import com.google.gson.internal.$Gson$Preconditions;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,92 +13,141 @@ public class RequestValidate {
         this.data = data;
     }
 
-    public  List<RequestValidationResult> validateRequest()
-    {
-        List<RequestValidationResult> results = new ArrayList<RequestValidationResult>();
-        if(data.isEmpty())
-        {
-            RequestValidationResult result = new RequestValidationResult(false,"Request is Empty");
-            results.add(result);
-            return  results;
-        }
-        if(data.get("firstname").length() <=1)
-        {
-            RequestValidationResult result = new RequestValidationResult(false,"FirstName is in valid");
-            results.add(result);
+    public RequestValidationResult validateRequest() {
+        boolean isValid = true;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(" ");
 
+        if (data.isEmpty()) {
+            isValid = false;
+            stringBuilder.append(" Request is Empty, ");
         }
-        if(data.get("lastname").length() <=1)
-        {
-            RequestValidationResult result = new RequestValidationResult(false, "LastName is in valid");
-            results.add(result);
-        }
-        if(data.get("emailaddress").length() <=4)
-        {
-            RequestValidationResult result = new RequestValidationResult(false,"emailaddress is in valid");
-            result.setMessage("emailaddress is in valid");
-            results.add(result);
-        }
-        if(data.get("phonenumber").length() <10)
-        {
-            RequestValidationResult result = new RequestValidationResult(false,"phonenumber is invalid");
-            results.add(result);
-        }
-        if(data.get("case")=="contactus")
-        {
-            if(data.get("message").length()<1)
-            {
-                RequestValidationResult result = new RequestValidationResult(false,"Message  is empty from Contact Us request");
-                results.add(result);
+        if (data.containsKey("firstname")) {
+            if (data.get("firstname").length() <= 1) {
+                isValid = false;
+                stringBuilder.append(" FirstName is in valid, ");
             }
+        } else {
+            isValid = false;
+            stringBuilder.append(" FirstName is missing, ");
         }
-        if(data.get("case")=="qurbana nominations")
-        {
-            if(data.get("services").length()<1 )
-            {
-                RequestValidationResult result = new RequestValidationResult(false,"Service is missing for qurbana nominations");
-                results.add(result);
-            }
-            if(data.get("message").length()<1)
-            {
-                RequestValidationResult result = new RequestValidationResult(false,"Message is missing for qurbana nominations ");
-                results.add(result);
-            }
 
-        }
-        if(data.get("case")=="perunnal share")
-        {
-            if(data.get("perunnal").length()<1 )
-            {
-                RequestValidationResult result = new RequestValidationResult(false,"Perunnal is missing");
-                results.add(result);
-            }
-            if(data.get("message").length()<1)
-            {
-                RequestValidationResult result = new RequestValidationResult(false,"Message is missing for Perunnal ");
-                results.add(result);
-            }
 
-        }
-        if(data.get("case")=="prayer requests")
-        {
-            if(data.get("message").length()<1)
-            {
-                RequestValidationResult result = new RequestValidationResult(false,"Message is missing for Prayer Request ");
-                results.add(result);
+        if (data.containsKey("lastname")) {
+            if (data.get("lastname").length() <= 1) {
+                isValid = false;
+                stringBuilder.append(" LastName is in valid, ");
             }
+        } else {
+            isValid = false;
+            stringBuilder.append(" LastName is missing, ");
+        }
 
-        }
-        if(data.get("case")=="online giving")
-        {
-            if(data.get("amount").length()<1)
-            {
-                RequestValidationResult result = new RequestValidationResult(false,"Amount is missing for Online Giving ");
-                results.add(result);
+        if (data.containsKey("emailaddress")) {
+            if (data.get("emailaddress").length() <= 4) {
+                isValid = false;
+                stringBuilder.append(" EmailAddress is invalid, ");
             }
+        } else {
+            isValid = false;
+            stringBuilder.append(" EmailAddress is missing, ");
+        }
+        if (data.containsKey("phonenumber")) {
+            if (data.get("phonenumber").length() < 10) {
+                isValid = false;
+                stringBuilder.append(" PhoneNumber is invalid, ");
+            }
+        } else {
+            isValid = false;
+            stringBuilder.append(" PhoneNumber is missing, ");
+        }
+
+        if (data.containsKey("case") && data.get("case").equals("contactus")) {
+
+            RequestValidationResult validationResult = MessageValidation(data, "ContactUs");
+            isValid = validationResult.getrequestValid();
+            stringBuilder.append(validationResult.getMessage());
+
 
         }
 
-        return results;
+        if (data.containsKey("case") && data.get("case").equals("qurbananominations")) {
+            if (data.containsKey("services")) {
+                if (data.get("services").length() < 1) {
+                    isValid = false;
+                    stringBuilder.append(" Service is missing for qurbana nominations, ");
+                }
+            } else {
+                isValid = false;
+                stringBuilder.append(" Service is missing for qurbana nominations, ");
+            }
+
+            RequestValidationResult validationResult = MessageValidation(data, "Qurbana Nominations");
+            isValid = validationResult.getrequestValid();
+            stringBuilder.append(validationResult.getMessage());
+
+
+        }
+        if (data.containsKey("case") && data.get("case").equals("perunnalshare")) {
+            if (data.containsKey("perunnal")) {
+                if (data.get("perunnal").length() < 1) {
+                    isValid = false;
+                    stringBuilder.append(" Perunnal is missing for Perunnal Share request, ");
+                }
+
+            } else {
+                isValid = false;
+                stringBuilder.append(" Perunnal is missing for Perunnal Share request, ");
+            }
+            RequestValidationResult validationResult = MessageValidation(data, "Perunnal Share");
+            isValid = validationResult.getrequestValid();
+            stringBuilder.append(validationResult.getMessage());
+
+
+        }
+
+        if (data.containsKey("case") && data.get("case").equals("prayerrequests")) {
+
+            RequestValidationResult validationResult = MessageValidation(data, "Prayer Requests");
+            isValid = validationResult.getrequestValid();
+            stringBuilder.append(validationResult.getMessage());
+
+
+        }
+        if (data.containsKey("case") && data.get("case").equals("onlinegiving")) {
+            if (data.containsKey("amount")) {
+                if (data.get("amount").length() < 1) {
+                    isValid = false;
+                    stringBuilder.append(" Amount is missing for Online Giving, ");
+                }
+            } else {
+                isValid = false;
+                stringBuilder.append(" Amount is missing for Online Giving, ");
+            }
+        }
+
+        RequestValidationResult result = new RequestValidationResult(isValid, stringBuilder.toString());
+        return result;
     }
+
+
+    private RequestValidationResult MessageValidation(Map<String, String> data, String Case) {
+        boolean isValid = true;
+        String message = "";
+        if (data.containsKey("message")) {
+            if (data.get("message").length() < 1) {
+                isValid = false;
+                message = String.format(" Message is invalid from {s} request, ", Case);
+            }
+        } else {
+            isValid = false;
+            message = String.format(" Message is empty from {s} request, ", Case);
+
+        }
+        RequestValidationResult result = new RequestValidationResult(isValid, message);
+        return result;
+    }
+
+
 }
+
