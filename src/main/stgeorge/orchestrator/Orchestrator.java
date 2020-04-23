@@ -25,22 +25,74 @@ public class Orchestrator {
                 case "contactus":
                     setContactUs();
                     break;
+                case "qurbananominations":
+                    setQurbanaNomination();
+                    break;
+                case "perunnalshare":
+                    setPerunnalshare();
+                    break;
+                case "prayerrequest":
+                    setPrayerRequest();
+                    break;
+                case "onlinegiving":
+                    setOnlineGiving();
+                    break;
             }
         } else {
             throw new InvalidParameterException("Invalid RequestFor :" + inputData.get("RequestFor"));
         }
     }
+    private void setOnlineGiving() {
+        trigger = Trigger.EMAIL;
+        toAddress = System.getenv("OnlineGivingToAddress");
+        subject = CreateSubject("New Online Giving Request");
+        StringBuilder sb = new StringBuilder("Hi \n \n  You have a new Online Giving request from StGeorge website. Please see the details below.\n");
+        CreateEmailMessageBody(sb);
+        if(!StringUtils.isEmpty(inputData.get("amount"))) sb.append("\nAmount : "+inputData.get("amount"));
+        sb.append("\n\nThanks\nwww.stgeorgechurchseattle.org");
+        message = sb.toString();
+    }
 
     private void setContactUs() {
         trigger = Trigger.EMAIL;
         toAddress = System.getenv("ContactUsToAddress");
-        subject = "New Contact Request";
-        StringBuilder sb = new StringBuilder("Hi \n \n  You have a new contact request from stgeorge website. Please see the details below.\n");
-        if(!StringUtils.isEmpty(inputData.get("FirstName"))) sb.append("\nFirst Name : "+inputData.get("FirstName"));
-        if(!StringUtils.isEmpty(inputData.get("LastName")))  sb.append("\nLast Name : "+inputData.get("LastName"));
-        if(!StringUtils.isEmpty(inputData.get("EmailAddress"))) sb.append("\nEmail Address : "+inputData.get("EmailAddress"));
-        if(!StringUtils.isEmpty(inputData.get("PhoneNumber"))) sb.append("\nPhoneNumber : "+inputData.get("PhoneNumber"));
-        if(!StringUtils.isEmpty(inputData.get("Message"))) sb.append("\nMessage : "+inputData.get("Message"));
+        subject = CreateSubject("New Contact Request");
+        StringBuilder sb = new StringBuilder("Hi \n \n  You have a new contact request from StGeorge website. Please see the details below.\n");
+        sb.append(CreateEmailMessageBody(sb));
+        if(!StringUtils.isEmpty(inputData.get("message"))) sb.append("\nMessage : "+inputData.get("message"));
+        sb.append("\n\nThanks\nwww.stgeorgechurchseattle.org");
+        message = sb.toString();
+    }
+
+    private void setPrayerRequest() {
+        trigger = Trigger.EMAIL;
+        toAddress = System.getenv("ContactUsToAddress");
+        subject = CreateSubject("New Prayer Request");
+        StringBuilder sb = new StringBuilder("Hi \n \n  You have a new Prayer Request from StGeorge website. Please see the details below.\n");
+        sb.append(CreateEmailMessageBody(sb));
+        if(!StringUtils.isEmpty(inputData.get("message"))) sb.append("\nPrayer request message : "+inputData.get("message"));
+        sb.append("\n\nThanks\nwww.stgeorgechurchseattle.org");
+        message = sb.toString();
+    }
+    private void setQurbanaNomination() {
+        trigger = Trigger.EMAIL;
+        toAddress = System.getenv("QurbanaNominationToAddress");
+        subject = CreateSubject("Qurbana Nomination Request");
+        StringBuilder sb = new StringBuilder("Hi \n \n  You have a new Qurbana Nomination Request from StGeorge website. Please see the details below.\n");
+        sb.append(CreateEmailMessageBody(sb));
+        if(!StringUtils.isEmpty(inputData.get("services"))) sb.append("\nQurbana services : "+inputData.get("services"));
+        if(!StringUtils.isEmpty(inputData.get("message"))) sb.append("\nMessage : "+inputData.get("message"));
+        sb.append("\n\nThanks\nwww.stgeorgechurchseattle.org");
+        message = sb.toString();
+    }
+    private void setPerunnalshare() {
+        trigger = Trigger.EMAIL;
+        toAddress = System.getenv("perunnalshareToAddress");
+        subject = CreateSubject("Perunnal Share Request");
+        StringBuilder sb = new StringBuilder("Hi \n \n  You have a new Perunnal Share Request from StGeorge website. Please see the details below.\n");
+        sb.append(CreateEmailMessageBody(sb));
+        if(!StringUtils.isEmpty(inputData.get("perunnal"))) sb.append("\nPerunnal : "+inputData.get("perunnal"));
+        if(!StringUtils.isEmpty(inputData.get("message"))) sb.append("\nMessage : "+inputData.get("message"));
         sb.append("\n\nThanks\nwww.stgeorgechurchseattle.org");
         message = sb.toString();
     }
@@ -59,5 +111,21 @@ public class Orchestrator {
 
     public String getMessage() {
         return message;
+    }
+
+    private String CreateSubject(String subjectLine)
+    {
+        StringBuilder sub = new StringBuilder(subjectLine);
+        if(!StringUtils.isEmpty(inputData.get("FirstName"))) sub.append(inputData.get("FirstName"));
+        if(!StringUtils.isEmpty(inputData.get("LastName")))  sub.append(inputData.get("LastName"));
+        subject = sub.toString();
+        return subject;
+    }
+    private StringBuilder CreateEmailMessageBody(StringBuilder sb) {
+        if(!StringUtils.isEmpty(inputData.get("firstname"))) sb.append("\nFirst Name : "+inputData.get("firstname"));
+        if(!StringUtils.isEmpty(inputData.get("lastname")))  sb.append("\nLast Name : "+inputData.get("lastname"));
+        if(!StringUtils.isEmpty(inputData.get("emailaddress"))) sb.append("\nEmail Address : "+inputData.get("emailaddress"));
+        if(!StringUtils.isEmpty(inputData.get("phonenumber"))) sb.append("\nPhoneNumber : "+inputData.get("phonenumber"));
+        return sb;
     }
 }
