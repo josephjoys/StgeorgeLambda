@@ -7,6 +7,8 @@ import com.google.gson.GsonBuilder;
 import stgeorge.mail.Emailer;
 import stgeorge.orchestrator.Orchestrator;
 import stgeorge.validator.LambdaValidator;
+import stgeorge.validator.RequestValidate;
+import stgeorge.validator.RequestValidationResult;
 
 import java.util.*;
 
@@ -16,8 +18,9 @@ public class Handler implements RequestHandler<Map<String, String>, String> {
     @Override
     public String handleRequest(Map<String, String> event, Context context) {
         System.out.println(gson.toJson(event));
-        LambdaValidator validator = new LambdaValidator(event);
-        if (validator.validate()) {
+        RequestValidate validator = new RequestValidate(event);
+        RequestValidationResult result = validator.validateRequest();
+        if (result.getrequestValid()) {
             Orchestrator orchestrator = new Orchestrator(event);
             orchestrator.orchestrate();
             switch (orchestrator.getTrigger()){
@@ -25,7 +28,7 @@ public class Handler implements RequestHandler<Map<String, String>, String> {
                 break;
             }
         }
-        return String.valueOf(event.size());
+        return result.getMessage();
     }
 
     private void sendEmail(Orchestrator orchestrator) {

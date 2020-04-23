@@ -45,9 +45,9 @@ public class Orchestrator {
     private void setOnlineGiving() {
         trigger = Trigger.EMAIL;
         toAddress = System.getenv("OnlineGivingToAddress");
-        subject = CreateSubject("New Online Giving Request");
+        subject = CreateSubject("Online Giving Request");
         StringBuilder sb = new StringBuilder("Hi \n \n  You have a new Online Giving request from StGeorge website. Please see the details below.\n");
-        CreateEmailMessageBody(sb);
+        sb.append(CreateEmailMessageBody(sb));
         if(!StringUtils.isEmpty(inputData.get("amount"))) sb.append("\nAmount : "+inputData.get("amount"));
         sb.append("\n\nThanks\nwww.stgeorgechurchseattle.org");
         message = sb.toString();
@@ -67,7 +67,7 @@ public class Orchestrator {
     private void setPrayerRequest() {
         trigger = Trigger.EMAIL;
         toAddress = System.getenv("ContactUsToAddress");
-        subject = CreateSubject("New Prayer Request");
+        subject = CreateSubject("Prayer Request");
         StringBuilder sb = new StringBuilder("Hi \n \n  You have a new Prayer Request from StGeorge website. Please see the details below.\n");
         sb.append(CreateEmailMessageBody(sb));
         if(!StringUtils.isEmpty(inputData.get("message"))) sb.append("\nPrayer request message : "+inputData.get("message"));
