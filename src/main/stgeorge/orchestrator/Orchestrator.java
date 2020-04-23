@@ -118,8 +118,7 @@ public class Orchestrator {
         StringBuilder sub = new StringBuilder(subjectLine);
         if(!StringUtils.isEmpty(inputData.get("FirstName"))) sub.append(inputData.get("FirstName"));
         if(!StringUtils.isEmpty(inputData.get("LastName")))  sub.append(inputData.get("LastName"));
-        subject = sub.toString();
-        return subject;
+        return sub.toString();
     }
     private StringBuilder CreateEmailMessageBody(StringBuilder sb) {
         if(!StringUtils.isEmpty(inputData.get("firstname"))) sb.append("\nFirst Name : "+inputData.get("firstname"));
