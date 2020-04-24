@@ -67,8 +67,8 @@ public class RequestValidate {
             }
         }
 
-        if (data.containsKey("case")) {
-            String caller = data.get("case");
+        if (data.containsKey("requestfor")) {
+            String caller = data.get("requestfor");
             switch (caller) {
                 case "contactus":
                     return ValidateMessage(data, "ContactUs");

@@ -2,7 +2,6 @@ package stgeorge.orchestrator;
 
 import stgeorge.util.StringUtils;
 import stgeorge.util.Trigger;
-
 import java.security.InvalidParameterException;
 import java.util.Map;
 
@@ -20,8 +19,8 @@ public class Orchestrator {
     }
 
     public void orchestrate() {
-        if (inputData.get("RequestFor") != null) {
-            switch (inputData.get("RequestFor")) {
+        if ((inputData.get("requestfor") != null) && inputData.containsKey("requestfor")){
+            switch (inputData.get("requestfor")) {
                 case "contactus":
                     setContactUs();
                     break;
@@ -116,8 +115,8 @@ public class Orchestrator {
     private String CreateSubject(String subjectLine)
     {
         StringBuilder sub = new StringBuilder(subjectLine);
-        if(!StringUtils.isEmpty(inputData.get("FirstName"))) sub.append(inputData.get("FirstName"));
-        if(!StringUtils.isEmpty(inputData.get("LastName")))  sub.append(inputData.get("LastName"));
+        if(!StringUtils.isEmpty(inputData.get("firstname"))) sub.append(" "+inputData.get("firstname"));
+        if(!StringUtils.isEmpty(inputData.get("firstname")))  sub.append(" "+inputData.get("lastname"));
         return sub.toString();
     }
     private StringBuilder CreateEmailMessageBody(StringBuilder sb) {

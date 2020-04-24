@@ -6,11 +6,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import stgeorge.mail.Emailer;
 import stgeorge.orchestrator.Orchestrator;
-import stgeorge.validator.LambdaValidator;
 import stgeorge.validator.RequestValidate;
 import stgeorge.validator.RequestValidationResult;
-
-import java.util.*;
+import java.util.Map;
 
 public class Handler implements RequestHandler<Map<String, String>, String> {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -25,10 +23,11 @@ public class Handler implements RequestHandler<Map<String, String>, String> {
             orchestrator.orchestrate();
             switch (orchestrator.getTrigger()){
                 case EMAIL: sendEmail(orchestrator);
-                break;
+                return "success";
             }
         }
-        return result.getMessage();
+            return result.getMessage();
+
     }
 
     private void sendEmail(Orchestrator orchestrator) {
