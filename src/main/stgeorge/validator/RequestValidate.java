@@ -71,13 +71,13 @@ public class RequestValidate {
             String caller = data.get("requestfor");
             switch (caller) {
                 case "contactus":
-                    return ValidateMessage(data, "ContactUs");
+                    return ValidRequest("ContactUs");
                 case "qurbananominations":
                     return ValidateQurbanaNomination(data);
                 case "perunnalshare":
                     return ValidatePerunnalShare(data);
                 case "prayerrequest":
-                    return ValidateMessage(data, "Prayer Request");
+                    return ValidRequest("Prayer Request");
                 case "onlinegiving":
                     return ValidateOnlineGiving(data);
 
@@ -87,6 +87,10 @@ public class RequestValidate {
         return result;
     }
 
+    private RequestValidationResult ValidRequest(String requestFor){
+        RequestValidationResult result = new RequestValidationResult(true, requestFor);
+        return result;
+    }
     private RequestValidationResult ValidateOnlineGiving(Map<String , String> data){
         boolean isValid = true;
         StringBuilder stringBuilder = new StringBuilder();
@@ -120,10 +124,6 @@ public class RequestValidate {
                 isValid = false;
                 stringBuilder.append(" Perunnal is missing for Perunnal Share request, ");
             }
-
-            RequestValidationResult validationResult = ValidateMessage(data, "Perunnal Share");
-            isValid = validationResult.getrequestValid();
-            stringBuilder.append(validationResult.getMessage());
             RequestValidationResult result = new RequestValidationResult(isValid, stringBuilder.toString());
             return result;
     }
@@ -134,9 +134,8 @@ public class RequestValidate {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(" ");
 
-
-            if (data.containsKey("services")) {
-                if (data.get("services").length() < 1) {
+            if (data.containsKey("service")) {
+                if (data.get("service").length() < 1) {
                     isValid = false;
                     stringBuilder.append(" Service is missing for qurbana nominations, ");
                 }
@@ -144,10 +143,6 @@ public class RequestValidate {
                 isValid = false;
                 stringBuilder.append(" Service is missing for qurbana nominations, ");
             }
-
-            RequestValidationResult validationResult = ValidateMessage(data, "Qurbana Nominations");
-            isValid = validationResult.getrequestValid();
-            stringBuilder.append(validationResult.getMessage());
             RequestValidationResult result = new RequestValidationResult(isValid, stringBuilder.toString());
             return result;
     }
@@ -156,24 +151,6 @@ public class RequestValidate {
         if(data.containsKey("firstname") && data.containsKey("lastname") && data.containsKey("emailaddress") &&data.containsKey("phonenumber"))
             return true;
         return  false;
-    }
-
-
-    private RequestValidationResult ValidateMessage(Map<String, String> data, String Case) {
-        boolean isValid = true;
-        String message = "";
-        if (data.containsKey("message")) {
-            if (data.get("message").length() < 1) {
-                isValid = false;
-                message = String.format(" Message is invalid from {s} request, ", Case);
-            }
-        } else {
-            isValid = false;
-            message = String.format(" Message is empty from {s} request, ", Case);
-
-        }
-        RequestValidationResult result = new RequestValidationResult(isValid, message);
-        return result;
     }
 
 
