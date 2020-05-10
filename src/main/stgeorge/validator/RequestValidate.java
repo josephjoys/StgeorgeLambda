@@ -134,8 +134,8 @@ public class RequestValidate {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(" ");
 
-            if (data.containsKey("service")) {
-                if (data.get("service").length() < 1) {
+            if (data.containsKey("services")) {
+                if (data.get("services").length() < 1) {
                     isValid = false;
                     stringBuilder.append(" Service is missing for qurbana nominations, ");
                 }
