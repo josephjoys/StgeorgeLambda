@@ -14,8 +14,8 @@ import java.util.Properties;
 
 public class Emailer {
 
-    private String from = System.getenv("FromAddress");
-    private String password = System.getenv("Password");
+    private String from = System.getenv("fromemailaddress");
+    private String password = System.getenv("fromemailpassword");
 
     public void send(String to, String subject, String content) {
 
