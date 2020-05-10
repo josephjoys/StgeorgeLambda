@@ -2,9 +2,6 @@ package stgeorge.mail;
 
 import stgeorge.util.StringUtils;
 
-import java.security.InvalidParameterException;
-import java.util.Properties;
-
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -12,6 +9,8 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.security.InvalidParameterException;
+import java.util.Properties;
 
 public class Emailer {
 
@@ -23,13 +22,11 @@ public class Emailer {
         if (StringUtils.isEmpty(from) && StringUtils.isEmpty(password)) {
             throw new InvalidParameterException("From address and Password required");
         }
-        // Assuming you are sending email from through gmails smtp
-        String host = "smtp.gmail.com";
 
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.host", "smtp-mail.outlook.com");
+        properties.put("mail.smtp.host", "smtpout.secureserver.net");
         properties.put("mail.smtp.port", "587");
 
 
