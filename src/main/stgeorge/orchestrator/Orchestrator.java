@@ -45,8 +45,8 @@ public class Orchestrator {
         trigger = Trigger.EMAIL;
         toAddress = System.getenv("onlinegivingtoaddress");
         subject = CreateSubject("Online Giving Request");
-        StringBuilder sb = new StringBuilder("Hi \n \n  You have a new Online Giving request from St.George website. Please see the details below.\n");
-        sb.append(CreateEmailMessageBody(sb));
+        StringBuilder body = new StringBuilder("Hi \n \n  You have a new Online Giving request from St.George website. Please see the details below.\n");
+        StringBuilder sb=CreateEmailMessageBody(body);
         if(!StringUtils.isEmpty(inputData.get("amount"))) sb.append("\nAmount : "+inputData.get("amount"));
         sb.append("\n\nThanks\nwww.stgeorgechurchseattle.org");
         message = sb.toString();
@@ -56,8 +56,8 @@ public class Orchestrator {
         trigger = Trigger.EMAIL;
         toAddress = System.getenv("contactustoaddress");
         subject = CreateSubject("New Contact Request");
-        StringBuilder sb = new StringBuilder("Hi \n \n  You have a new contact request from St.George website. Please see the details below.\n");
-        sb.append(CreateEmailMessageBody(sb));
+        StringBuilder body = new StringBuilder("Hi \n \n  You have a new contact request from St.George website. Please see the details below.\n");
+        StringBuilder sb=CreateEmailMessageBody(body);
         if(!StringUtils.isEmpty(inputData.get("message"))) sb.append("\nMessage : "+inputData.get("message"));
         sb.append("\n\nThanks\nwww.stgeorgechurchseattle.org");
         message = sb.toString();
@@ -68,17 +68,17 @@ public class Orchestrator {
         toAddress = System.getenv("prayerrequesttoaddress");
         subject = CreateSubject("Prayer Request");
         StringBuilder sb = new StringBuilder("Hi \n \n  You have a new Prayer Request from St.George website. Please see the details below.\n");
-        sb.append(CreateEmailMessageBody(sb));
-        if(!StringUtils.isEmpty(inputData.get("message"))) sb.append("\nPrayer request message : "+inputData.get("message"));
+        StringBuilder messageBody =CreateEmailMessageBody(sb);
+        if(!StringUtils.isEmpty(inputData.get("message"))) messageBody.append("\nPrayer request message : "+inputData.get("message"));
         sb.append("\n\nThanks\nwww.stgeorgechurchseattle.org");
-        message = sb.toString();
+        message = messageBody.toString();
     }
     private void setQurbanaNomination() {
         trigger = Trigger.EMAIL;
         toAddress = System.getenv("qurbananominationtoaddress");
         subject = CreateSubject("Qurbana Nomination Request");
-        StringBuilder sb = new StringBuilder("Hi \n \n  You have a new Qurbana Nomination Request from St.George website. Please see the details below.\n");
-        sb.append(CreateEmailMessageBody(sb));
+        StringBuilder body = new StringBuilder("Hi \n \n  You have a new Qurbana Nomination Request from St.George website. Please see the details below.\n");
+        StringBuilder sb=CreateEmailMessageBody(body);
         if(!StringUtils.isEmpty(inputData.get("services"))) sb.append("\nQurbana services : "+inputData.get("services"));
         if(!StringUtils.isEmpty(inputData.get("message"))) sb.append("\nMessage : "+inputData.get("message"));
         sb.append("\n\nThanks\nwww.stgeorgechurchseattle.org");
@@ -88,8 +88,8 @@ public class Orchestrator {
         trigger = Trigger.EMAIL;
         toAddress = System.getenv("perunnalsharetoaddress");
         subject = CreateSubject("Perunnal Share Request");
-        StringBuilder sb = new StringBuilder("Hi \n \n  You have a new Perunnal Share Request from St.George website. Please see the details below.\n");
-        sb.append(CreateEmailMessageBody(sb));
+        StringBuilder body = new StringBuilder("Hi \n \n  You have a new Perunnal Share Request from St.George website. Please see the details below.\n");
+        StringBuilder sb=CreateEmailMessageBody(body);
         if(!StringUtils.isEmpty(inputData.get("perunnal"))) sb.append("\nPerunnal : "+inputData.get("perunnal"));
         if(!StringUtils.isEmpty(inputData.get("message"))) sb.append("\nMessage : "+inputData.get("message"));
         sb.append("\n\nThanks\nwww.stgeorgechurchseattle.org");

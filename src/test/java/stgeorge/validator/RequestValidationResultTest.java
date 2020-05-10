@@ -127,7 +127,7 @@ public class RequestValidationResultTest extends TestCase {
         d.put("emailaddress","Johnsmith@aol.com");
         d.put("phonenumber", "4254564561");
         d.put("requestfor","qurbananominations");
-        d.put("service","perunnalshare");
+        d.put("services","perunnalshare");
         d.put("message","perunnalshare");
         RequestValidate validate = new RequestValidate(d);
         RequestValidationResult results = validate.validateRequest();
@@ -141,7 +141,7 @@ public class RequestValidationResultTest extends TestCase {
         d.put("emailaddress","Johnsmith@aol.com");
         d.put("phonenumber", "4254564561");
         d.put("requestfor","qurbananominations");
-              RequestValidate validate = new RequestValidate(d);
+        RequestValidate validate = new RequestValidate(d);
         RequestValidationResult results = validate.validateRequest();
         Assert.assertFalse(results.getrequestValid());
     }
@@ -153,7 +153,7 @@ public class RequestValidationResultTest extends TestCase {
         d.put("emailaddress","Johnsmith@aol.com");
         d.put("phonenumber", "4254564561");
         d.put("requestfor","qurbananominations");
-        d.put("service","perunnalshare");
+        d.put("services","perunnalshare");
         RequestValidate validate = new RequestValidate(d);
         RequestValidationResult results = validate.validateRequest();
         Assert.assertTrue(results.getrequestValid());
