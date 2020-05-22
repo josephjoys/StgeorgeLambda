@@ -26,7 +26,7 @@ public class Emailer {
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.host", "smtpout.secureserver.net");
+        properties.put("mail.smtp.host", "smtp-mail.outlook.com");
         properties.put("mail.smtp.port", "587");
 
 
